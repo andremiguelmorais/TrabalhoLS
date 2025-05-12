@@ -1,5 +1,6 @@
 import "./assets/styles/App.css";
 import ControlPanel from "./components/control-panel/control-panel.component";
+import GameBoard from "./components/gameboard/GameBoard.component";
 
 function App() {
   return (
