@@ -1,20 +1,34 @@
-import React from "react";
-import "./control-panel.css";
-function ControlPanel() {
+import React, { useState } from 'react';
+import './control-panel.css';
+
+function ControlPanel({ onStartGame }) {
+  const [opponent, setOpponent] = useState('0'); // '0' para sem escolha, '1' para Jogador, '2' para BOT
+
+  const handleStart = () => {
+    if (opponent === '0') {
+      alert('Por favor, selecione um oponente!');
+    } else {
+      onStartGame(opponent); // Passa o tipo de oponente para o jogo
+    }
+  };
+
   return (
     <section id="panel-control">
       <h3 className="sr-only">Escolha o seu oponente</h3>
       <form className="form">
         <fieldset className="form-group">
           <label htmlFor="btLevel">Opções:</label>
-          <select id="btLevel">
+          <select
+            id="btLevel"
+            value={opponent}
+            onChange={(e) => setOpponent(e.target.value)}
+          >
             <option value="0">Seleccione...</option>
             <option value="1">Jogador</option>
             <option value="2">BOT</option>
-            
           </select>
         </fieldset>
-        <button type="button" id="btPlay">
+        <button type="button" id="btPlay" onClick={handleStart}>
           Iniciar Jogo
         </button>
       </form>
@@ -22,24 +36,6 @@ function ControlPanel() {
         <p id="message" role="alert" className="hide">
           Clique em Iniciar o Jogo!
         </p>
-        <dl className="list-item left">
-          <dt>Tempo de Jogo:</dt>
-          <dd id="gameTime">0s</dd>
-        </dl>
-         {/* Este é um comentário JSX 
-          <dl className="list-item right">
-          <dt>Pontuação TOP:</dt>
-          <dd id="pointsTop">0</dd>
-        </dl>
-            
-        <dl className="list-item left">
-          <dt>Pontuação:</dt>
-          <dd id="points">0</dd>
-        </dl>
-        <div id="top10" className="right">
-          <button id="btTop">Ver TOP 10</button>
-        </div> 
-            */}
       </div>
     </section>
   );
