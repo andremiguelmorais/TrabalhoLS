@@ -161,4 +161,19 @@
   .hide {
     display: none;
   }
+  #container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
   

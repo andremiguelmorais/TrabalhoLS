@@ -4,25 +4,26 @@ import ControlPanel from "./components/control-panel/control-panel.component";
 import GameBoard from "./components/gameboard/GameBoard.component";
 
 function App() {
-  const [opponent, setOpponent] = useState(null); // Estado para armazenar oponente
+  const [opponent, setOpponent] = useState(null); // Estado para armazenar o tipo de oponente (null, 1, 2)
+  const [gameStarted, setGameStarted] = useState(false); // Estado para controlar se o jogo começou
 
-  // Função chamada ao iniciar o jogo
-  const onStartGame = (selectedOpponent) => {
-    setOpponent(selectedOpponent); // Armazenar o oponente selecionado
+  // Função para iniciar o jogo, chamada quando o botão de iniciar for clicado
+  const handleStartGame = (selectedOpponent) => {
+    setOpponent(selectedOpponent);
+    setGameStarted(true);
   };
 
   return (
     <div>
       <div id="container">
         <h2>4 em Linha</h2>
-        Este é o Componente App
+        <p>Este é o Componente App</p>
       </div>
-      
-      {/* Passa a função onStartGame como prop para o ControlPanel */}
-      <ControlPanel onStartGame={onStartGame} />
-      
-      {/* Só renderiza o GameBoard se o oponente for selecionado */}
-      {opponent && <GameBoard opponent={opponent} />}
+      {!gameStarted ? (
+        <ControlPanel onStartGame={handleStartGame} />
+      ) : (
+        <GameBoard opponent={opponent} />
+      )}
     </div>
   );
 }

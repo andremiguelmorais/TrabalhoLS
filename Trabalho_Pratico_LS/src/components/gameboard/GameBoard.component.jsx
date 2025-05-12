@@ -8,12 +8,14 @@ function GameBoard({ opponent }) {
   const [board, setBoard] = useState(Array(ROWS).fill().map(() => Array(COLS).fill(null)));
   const [currentPlayer, setCurrentPlayer] = useState('🔴');
   const [gameOver, setGameOver] = useState(false);
+  const [highlightedCol, setHighlightedCol] = useState(null);  // Coluna destacada
 
   // Função para reiniciar o jogo
   const resetGame = () => {
     setBoard(Array(ROWS).fill().map(() => Array(COLS).fill(null)));
     setCurrentPlayer('🔴');
     setGameOver(false);
+    setHighlightedCol(null);  // Resetando a coluna destacada
   };
 
   // Função chamada ao clicar em uma coluna
@@ -106,16 +108,28 @@ function GameBoard({ opponent }) {
     }
   }, [currentPlayer, opponent, board]);
 
+  // Atualiza a coluna destacada quando o mouse move
+  const handleMouseMove = (e) => {
+    const boardRect = e.target.getBoundingClientRect();
+    const x = e.clientX - boardRect.left;
+    const colIndex = Math.floor(x / (boardRect.width / COLS));
+    setHighlightedCol(colIndex);
+  };
+
   return (
     <div>
-      <div className="game-board">
+      <div
+        className="game-board"
+        onMouseMove={handleMouseMove} // Evento de movimento do mouse
+        style={{ position: 'relative' }}
+      >
         {board.map((row, rowIndex) => (
           <div key={rowIndex} className="board-row" style={{ display: 'flex' }}>
             {row.map((cell, colIndex) => (
               <div
                 key={colIndex}
                 onClick={() => handleColumnClick(colIndex)}
-                className="board-cell"
+                className={`board-cell ${highlightedCol === colIndex ? 'highlighted' : ''}`}
                 style={{
                   width: 60,
                   height: 60,
@@ -133,6 +147,23 @@ function GameBoard({ opponent }) {
             ))}
           </div>
         ))}
+
+        {/* Mostrar a peça "flutuante" ou a seta indicando a coluna selecionada */}
+        {highlightedCol !== null && (
+          <div
+            className="highlight-piece"
+            style={{
+              position: 'absolute',
+              top: -60, // Acima do tabuleiro
+              left: highlightedCol * 60, // Alinha com a coluna
+              width: 60,
+              height: 60,
+              backgroundColor: currentPlayer === '🔴' ? 'red' : 'yellow',
+              borderRadius: '50%',
+              border: '2px solid white',
+            }}
+          ></div>
+        )}
       </div>
 
       {/* Exibe o botão de reiniciar quando o jogo terminar */}

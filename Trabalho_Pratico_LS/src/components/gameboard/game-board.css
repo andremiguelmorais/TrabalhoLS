@@ -1,0 +1,9 @@
+.board-cell.highlighted {
+    border: 2px solid #f39c12; /* Borda amarela para indicar a coluna */
+  }
+  
+  .highlight-piece {
+    background-color: #f39c12; /* Cor da peça */
+    border-radius: 50%;
+  }
+  
