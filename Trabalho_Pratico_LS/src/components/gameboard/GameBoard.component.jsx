@@ -5,15 +5,22 @@ const ROWS = 6;
 const COLS = 7;
 
 function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Color }) {
+  // Inicia com player aleatório
+  const getRandomStartingPlayer = () => {
+    return Math.random() < 0.5
+      ? { name: player1Name, color: player1Color }
+      : { name: player2Name, color: player2Color };
+  };
+
   const [board, setBoard] = useState(Array(ROWS).fill().map(() => Array(COLS).fill(null)));
-  const [currentPlayer, setCurrentPlayer] = useState({ name: player1Name, color: player1Color });
+  const [currentPlayer, setCurrentPlayer] = useState(getRandomStartingPlayer());
   const [gameOver, setGameOver] = useState(false);
   const [highlightedCol, setHighlightedCol] = useState(null);
-  const [timeElapsed, setTimeElapsed] = useState(0); // Tempo da jogada
+  const [timeElapsed, setTimeElapsed] = useState(0);
 
   const resetGame = () => {
     setBoard(Array(ROWS).fill().map(() => Array(COLS).fill(null)));
-    setCurrentPlayer({ name: player1Name, color: player1Color });
+    setCurrentPlayer(getRandomStartingPlayer());
     setGameOver(false);
     setHighlightedCol(null);
     setTimeElapsed(0);
@@ -31,7 +38,7 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
         setCurrentPlayer(currentPlayer.color === player1Color
           ? { name: player2Name, color: player2Color }
           : { name: player1Name, color: player1Color });
-        setTimeElapsed(0); // Reseta o timer a cada jogada válida
+        setTimeElapsed(0);
         break;
       }
     }
@@ -47,7 +54,6 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
     ) {
       setGameOver(true);
       alert(`${currentPlayer.name} venceu!`);
-      return;
     }
   };
 
@@ -59,9 +65,7 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
       const c = col + i * colDir;
       if (r >= 0 && r < ROWS && c >= 0 && c < COLS && board[r][c] === currentPlayer.color) {
         count++;
-      } else {
-        break;
-      }
+      } else break;
     }
 
     for (let i = 1; i < 4; i++) {
@@ -69,9 +73,7 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
       const c = col - i * colDir;
       if (r >= 0 && r < ROWS && c >= 0 && c < COLS && board[r][c] === currentPlayer.color) {
         count++;
-      } else {
-        break;
-      }
+      } else break;
     }
 
     return count >= 4;
@@ -105,16 +107,14 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
     }
   }, [currentPlayer, opponent, board]);
 
-  // UseEffect para o timer da jogada
   useEffect(() => {
     if (gameOver) return;
 
-    setTimeElapsed(0); // Resetar tempo ao trocar jogador
+    setTimeElapsed(0);
 
     const interval = setInterval(() => {
       setTimeElapsed(prev => {
         if (prev >= 10) {
-          // Passa a vez automaticamente
           setCurrentPlayer(currentPlayer.color === player1Color
             ? { name: player2Name, color: player2Color }
             : { name: player1Name, color: player1Color });
@@ -128,69 +128,41 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
   }, [currentPlayer, gameOver]);
 
   const handleMouseMove = (e) => {
-    const boardRect = e.target.getBoundingClientRect();
+    const boardRect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - boardRect.left;
-    const colIndex = Math.floor(x / (boardRect.width / COLS));
+    const colWidth = boardRect.width / COLS;
+    const colIndex = Math.floor(x / colWidth);
     setHighlightedCol(colIndex);
   };
 
   const getColorStyle = (color) => {
-    // Recebe a cor em string e retorna a cor CSS
-    // Aqui simplificado para cores básicas
-    return color || 'gray';
+    switch (color) {
+      case '🔴': return 'red';
+      case '🟡': return 'yellow';
+      case '🔵': return 'blue';
+      default: return color || 'gray';
+    }
   };
 
   return (
     <div>
-      {/* Exibir tempo da jogada */}
-      <div style={{ marginBottom: 10, fontWeight: 'bold', textAlign: 'center' }}>
+      <div className="game-info">
         {gameOver
           ? "Jogo encerrado"
           : `${currentPlayer.name} (${currentPlayer.color}) - Tempo da jogada: ${timeElapsed} seg`}
       </div>
 
-      <div
-        className="draggable-piece"
-        draggable
-        onDragStart={(e) => e.dataTransfer.setData("text/plain", currentPlayer.color)}
-        style={{
-          width: 60,
-          height: 60,
-          backgroundColor: getColorStyle(currentPlayer.color),
-          borderRadius: '50%',
-          border: '2px solid white',
-          margin: '0 auto',
-          marginBottom: 10,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '30px',
-          cursor: 'grab',
-        }}
-      ></div>
-      <div
-        className="game-board"
-        onMouseMove={handleMouseMove}
-        style={{ position: 'relative' }}
-      >
+      <div className="game-board" onMouseMove={handleMouseMove}>
         {board.map((row, rowIndex) => (
-          <div key={rowIndex} className="board-row" style={{ display: 'flex' }}>
+          <div key={rowIndex} className="board-row">
             {row.map((cell, colIndex) => (
               <div
                 key={colIndex}
                 onClick={() => handleColumnClick(colIndex)}
-                className={`board-cell ${highlightedCol === colIndex ? 'highlighted' : ''}`}
-                style={{
-                  width: 60,
-                  height: 60,
-                  backgroundColor: '#1e3a8a',
-                  border: '2px solid white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '30px',
-                  cursor: gameOver ? 'not-allowed' : 'pointer',
-                }}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={() => handleColumnClick(colIndex)}
+                className={`board-cell ${highlightedCol === colIndex ? 'highlighted' : ''} ${gameOver ? 'disabled' : ''}`}
+                style={{ color: cell ? getColorStyle(cell) : undefined }}
               >
                 {cell}
               </div>
@@ -199,24 +171,18 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
         ))}
 
         {highlightedCol !== null && (
-          <div
-            className="highlight-piece"
-            style={{
-              position: 'absolute',
-              top: -60,
-              left: highlightedCol * 60,
-              width: 60,
-              height: 60,
-              backgroundColor: getColorStyle(currentPlayer.color),
-              borderRadius: '50%',
-              border: '2px solid white',
-            }}
-          ></div>
+         <div
+  className="highlight-piece"
+  style={{
+    left: `calc(${(100 / COLS) * highlightedCol}% - 20px)`, // Ajuste de centralização
+    backgroundColor: getColorStyle(currentPlayer.color)
+  }}
+></div>
         )}
       </div>
 
       {gameOver && (
-        <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <div className="game-over-button">
           <button onClick={resetGame}>Reiniciar Jogo</button>
         </div>
       )}
