@@ -1,6 +1,6 @@
 // src/components/GameSetup.jsx
 import React, { useState } from "react";
-
+import "./gamesetup.css";
 
 function GameSetup({ onStartGame }) {
   const [opponent, setOpponent] = useState("1"); // '1' jogador, '2' bot
