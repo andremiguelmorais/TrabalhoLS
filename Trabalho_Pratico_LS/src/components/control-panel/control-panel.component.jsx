@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './control-panel.css';
+import './control.css';
 
 function ControlPanel({ onStartGame }) {
   const [opponent, setOpponent] = useState('0'); // '0' para sem escolha, '1' para Jogador, '2' para BOT

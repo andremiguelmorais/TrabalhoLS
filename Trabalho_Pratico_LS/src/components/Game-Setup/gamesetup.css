@@ -162,10 +162,7 @@
   .hide {
     display: none;
   }
-  #container {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+  
   
   form {
     text-align: center;
@@ -178,3 +175,7 @@
     cursor: pointer;
   }
   
+  #container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
