@@ -1,181 +1,70 @@
-/**********************************************
-*** © Linguagens Script > DEIS > ISEC > IPC 
-*** Jogo de Memória em React
-*** Estilos para control-panel.component.jsx 
-**********************************************/
-#panel-control {
-    background-color: #f1f0f0;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
-    border-radius: 10px;
-    font-size: smaller;
-    color: grey;
-    width: 100%;
-    margin: 15px 0px;
-    border: 3px solid var(--globalColor);
-  }
-  
-  #panel-control .form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  #panel-control .form,
-  #panel-control .form-metadata {
-    width: 100%;
-    padding: 10px 20px;
-  }
-  
-  #panel-control .form-metadata {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 5px;
-    width: 100%;
-  }
-  #panel-control
-    .form-metadata:has(#message.hide + :not(.list-item.gameStarted)) {
-    grid-template-columns: auto;
-  }
-  
-  #panel-control
-    .form-metadata
-    #message:not(.hide):has(+ .list-item.gameStarted) {
-    display: none;
-  }
-  
-  #panel-control .list-item.gameStarted {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2px;
-  }
-  #panel-control .list-item:not(.gameStarted) {
-    display: none;
-  }
-  
-  #message.hide {
-    display: none;
-  }
-  
-  #panel-control .left {
-    justify-self: left;
-  }
-  
-  #panel-control .right {
-    justify-self: end;
-  }
-  
-  #panel-control .form-group {
-    border: 0;
-    margin: 0;
-    padding: 0;
-    justify-self: left;
-  }
-  
-  #panel-control .form-info {
-    display: grid;
-    grid-template-columns: auto auto;
-    width: 100%;
-    list-style-type: none;
-  }
-  
-  #panel-control #message {
-    color: var(--messageColor);
-    font-weight: bolder;
-  }
-  
-  #game {
-    width: 80%;
-    min-width: 200px;
-    margin: 0 auto;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    grid-template-columns: auto auto auto;
-    gap: 10px;
-    display: grid;
-    justify-content: center;
-    perspective: 1000px;
-    user-select: none;
-  
-  }
-  
-  #game.avancado {
-    width: 80%;
-    grid-template-columns: auto auto auto auto auto;
-  }
-  
-  #game.intermedio {
-    width: 80%;
-    grid-template-columns: auto auto auto auto;
-  }
-  
-  #btPlay {
-    border: 1px solid #5e5858;
-    background-color: #5eac52;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
-    justify-self: end;
-  }
-  #btPlay:hover {
-    background: rgba(0, 0, 0, 0.1);
-    border: 1px solid #751d1d;
-    background: var(--globalColor);
-  }
-  
-  #btPlay:disabled,
-  #btPlay:disabled:hover {
-    background: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    cursor: inherit;
-  }
-  
-  #gameTime,
-  #points {
-    background-color: grey;
-    color: white;
-    font-weight: bolder;
-    margin-left: 5px;
-    width: 45px;
-    text-align: right;
-    display: inline-block;
-  }
-  #points {
-    width: 65px;
-    text-align: left;
-    background-color: transparent;
-    color: var(--globalColor);
-  }
-  
-  button:hover {
-    background: rgba(0, 0, 0, 0.1);
-    border: 2px solid grey;
-  }
-  
-  #panel-control #top10 {
-    grid-column: 2 / -1;
-  }
-  
-  .hide {
-    display: none;
-  }
-  
-  
-  form {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  button {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  #container {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+.game-setup-container {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #2c2f59;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(64, 68, 135, 0.7);
+  color: #eee;
+  font-size: 16px;
+}
+
+.game-setup-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label.label-opponent {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #a0a0d0;
+}
+
+.select-opponent {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: #404487;
+  color: white;
+}
+
+.player-setup {
+  margin-bottom: 25px;
+}
+
+.player-setup h3 {
+  margin-bottom: 10px;
+  color: #c0c0ff;
+}
+
+.input-player-name,
+.select-player-color {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #404487;
+  color: white;
+  font-size: 16px;
+}
+
+.btn-start {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--globalColor);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-start:hover {
+  background-color: #2a2e68;
+}
