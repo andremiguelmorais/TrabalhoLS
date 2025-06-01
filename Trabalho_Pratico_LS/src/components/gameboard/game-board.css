@@ -8,23 +8,11 @@
   text-align: center;
 }
 
-.draggable-piece {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 2px solid white;
-  margin: 0 auto 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  cursor: grab;
-}
 
 .game-board {
   position: relative;
-padding-left: 460px;
-padding-top: 88px;
+padding-left: 420px;
+padding-top: 40px;
 
 }
 
@@ -59,4 +47,8 @@ padding-top: 88px;
   height: 60px;
   border-radius: 50%;
   border: 2px solid white;
+}
+
+.back-button{
+  padding-right: 20px;
 }

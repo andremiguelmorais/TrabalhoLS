@@ -166,6 +166,10 @@ function GameBoard({ opponent, player1Name, player2Name, player1Color, player2Co
       {gameOver && (
         <div className="game-over-button">
           <button onClick={resetGame}>Reiniciar Jogo</button>
+          <button className="back-button" onClick={() => window.location.href = "/"}>
+  🏠 Página Inicial
+</button>
+          
         </div>
       )}
     </div>
