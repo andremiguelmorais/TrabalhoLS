@@ -7,8 +7,8 @@ function App() {
   const [config, setConfig] = useState(null);
 
   return (
-    <div id="container">
-      <h2>4 em Linha</h2>
+    <div id="tit-container">
+        <h2>4 em Linha</h2>
       {!config ? (
         <GameSetup onStartGame={setConfig} />
       ) : (

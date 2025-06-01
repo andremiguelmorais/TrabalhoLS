@@ -1,34 +1,35 @@
+/* Importa a fonte arcade */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-
-
-
-
+/* Container principal vira referência para os títulos posicionados */
 #container {
-  text-align: center;
+  position: relative;
+  text-align: center;   /* mantém o resto centralizado */
+  padding-top: 10px;    /* espaço para os títulos “fixos” */
 }
 
-h2 {
-    padding-top: 10px;
-  font-family: 'Bangers', cursive;
-  font-size: 3rem;
-  font-weight: normal;
-  background: linear-gradient(
-    270deg,
-    #00c9ff,
-    #92fe9d,
-    #f953c6,
-    #ff6ec4,
-    #00f2fe,
-    #00c9ff
-  );
-  background-size: 1000% 1000%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbowGradient 6s ease-in-out infinite;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 105, 180, 0.4);
+#tit-container {
+  position: relative;
+  text-align: center;   /* mantém o resto centralizado */
+  padding-top: 10px;    /* espaço para os títulos “fixos” */
+}
+
+#tit-container h2 {
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  animation: arcade-glow 1.5s infinite alternate, fade-in 1s ease-in-out;
 }
 
 
+@keyframes arcade-glow {
+  0% { text-shadow: 0 0 5px #ff0000, 0 0 10px #ff7300, 0 0 20px #ff7300; }
+  50% { text-shadow: 0 0 10px #ff7300, 0 0 20px #ff0000, 0 0 30px #ff0000; }
+  100% { text-shadow: 0 0 5px #ff0000, 0 0 10px #ff7300, 0 0 20px #ff7300; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
 
 

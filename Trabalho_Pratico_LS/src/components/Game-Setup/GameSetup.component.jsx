@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import "./gamesetup.css";
 
+
+
 function GameSetup({ onStartGame }) {
   const [opponent, setOpponent] = useState("1"); // '1' jogador, '2' bot
   const [player1Name, setPlayer1Name] = useState("Jogador 1");
@@ -85,3 +87,4 @@ function GameSetup({ onStartGame }) {
 }
 
 export default GameSetup;
+
