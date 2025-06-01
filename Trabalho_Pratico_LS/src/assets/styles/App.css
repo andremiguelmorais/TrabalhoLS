@@ -1,0 +1,34 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+
+
+
+#container {
+  text-align: center;
+}
+
+h2 {
+    padding-top: 10px;
+  font-family: 'Bangers', cursive;
+  font-size: 3rem;
+  font-weight: normal;
+  background: linear-gradient(
+    270deg,
+    #00c9ff,
+    #92fe9d,
+    #f953c6,
+    #ff6ec4,
+    #00f2fe,
+    #00c9ff
+  );
+  background-size: 1000% 1000%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowGradient 6s ease-in-out infinite;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 105, 180, 0.4);
+}
+
+
+
+
