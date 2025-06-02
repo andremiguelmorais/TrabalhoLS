@@ -1,17 +1,17 @@
-/* Importa a fonte arcade */
+
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* Container principal vira referência para os títulos posicionados */
+
 #container {
   position: relative;
-  text-align: center;   /* mantém o resto centralizado */
-  padding-top: 10px;    /* espaço para os títulos “fixos” */
+  text-align: center;   
+  padding-top: 10px;    
 }
 
 #tit-container {
   position: relative;
-  text-align: center;   /* mantém o resto centralizado */
-  padding-top: 10px;    /* espaço para os títulos “fixos” */
+  text-align: center;   
+  padding-top: 10px;    
 }
 
 #tit-container h2 {
