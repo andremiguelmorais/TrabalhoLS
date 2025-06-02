@@ -70,7 +70,7 @@ function GameBoard({                                                            
     }
 
     return () => clearInterval(timerRef.current);                                                // Limpa o timer ao desmontar ou alterar
-  }, [currentPlayer, gameOver]);                                                                 // Dependências: jogador ou fim do jogo
+  }, [currentPlayer, gameOver,player1Color, player1Name, player2Color, player2Name]);                                                                 // Dependências: jogador ou fim do jogo
 
   const resetGame = () => {                                                                      // Função para reiniciar o jogo
     setBoard(Array(ROWS).fill().map(() => Array(COLS).fill(null)));                              // Reseta o tabuleiro
