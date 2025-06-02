@@ -98,3 +98,17 @@
   background-color: rgba(255, 215, 0, 0.4);
 }
 
+@keyframes drop {
+  0% {
+    transform: translateY(-500px);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.board-cell.drop-animation {
+  animation: drop 0.4s ease-out;
+}

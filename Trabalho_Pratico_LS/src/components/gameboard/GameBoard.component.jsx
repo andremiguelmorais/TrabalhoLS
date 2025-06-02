@@ -81,13 +81,18 @@ function GameBoard({                                                            
     setSpecialCells(generateSpecialCells());                                                     // Gera novas células especiais
   };
 
+  const [lastMove, setLastMove] = useState(null);                     // {row, col}
+
   const handleColumnClick = (colIndex) => {                                                      // Trata clique em uma coluna
     if (gameOver) return;                                                                        // Ignora se jogo terminou
     for (let row = ROWS - 1; row >= 0; row--) {                                                  // Percorre de baixo para cima
       if (!board[row][colIndex]) {                                                               // Se célula estiver vazia
         const newBoard = board.map((r) => [...r]);                                               // Cria cópia do tabuleiro
         newBoard[row][colIndex] = currentPlayer.color;                                           // Marca célula com cor do jogador
-        setBoard(newBoard);                                                                      // Atualiza o estado do tabuleiro
+        setBoard(newBoard);                                                                        // Atualiza o estado do tabuleiro
+        setLastMove({ row, col: colIndex });                                                        // salve a última jogada
+        setTimeout(() => setLastMove(null), 500);                                                 // Limpa após animação (500ms = duração da animação)
+                                                                     
 
         checkForWinner(newBoard, row, colIndex);                                                 // Verifica se houve vencedor
 
@@ -171,25 +176,29 @@ function GameBoard({                                                            
       </div>
 
       <div className="game-board" onMouseMove={handleMouseMove}>                                 {/* Área do tabuleiro */}
-        {board.map((rowArr, r) => (                                                              // Mapeia linhas
+        {board.map((rowArr, r) => (                                                             // Mapeia linhas
           <div key={r} className="board-row">                                                    {/* Linha do tabuleiro */}
             {rowArr.map((cell, c) => {                                                           // Mapeia colunas
               const isSpecial = specialCells.some(                                               // Verifica se célula é especial
                 (cell) => cell.row === r && cell.col === c
               );
+
+              const isLastMove = lastMove && lastMove.row === r && lastMove.col === c;        // Verifica se esta célula foi a última onde uma peça foi colocada
+
               return (
                 <div
                   key={c}
                   className={[
-                    "board-cell",                                                                // Classe base
-                    highlightedCol === c && "highlighted",                                       // Destaque
-                    gameOver && "disabled",                                                      // Desativa se fim de jogo
-                    isSpecial && "special",                                                      // Marca como especial
-                  ].filter(Boolean).join(" ")}                                                   // Junta as classes válidas
-                  onClick={() => handleColumnClick(c)}                                           // Clique para jogar
-                  onDragOver={(e) => e.preventDefault()}                                         // Suporte a drop
-                  onDrop={() => handleColumnClick(c)}                                            // Drop para jogar
-                  style={{ color: cell ? getColorStyle(cell) : undefined }}                     // Cor da peça
+                    "board-cell",                           // Estilo base da célula
+                    highlightedCol === c && "highlighted",  // Coluna destacada ao passar o mouse
+                    gameOver && "disabled",                 // Desativa interação se o jogo acabou
+                    isSpecial && "special",                 // Marca visualmente se for uma célula especial
+                    isLastMove && "drop-animation",         // Aplica animação de queda se for a última peça jogada
+          ].filter(Boolean).join(" ")}               // Junta as classes válidas
+          onClick={() => handleColumnClick(c)}       // Jogar clicando na coluna
+          onDragOver={(e) => e.preventDefault()}     // Permite arrastar peça
+          onDrop={() => handleColumnClick(c)}        // Jogar arrastando e soltando
+          style={{ color: cell ? getColorStyle(cell) : undefined }} // Cor da peça
                 >
                   {cell}                                                                         {/* Mostra peça (emoji) */}
                 </div>
